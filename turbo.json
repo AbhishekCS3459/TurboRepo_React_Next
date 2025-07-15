@@ -11,11 +11,16 @@
       "dependsOn": ["^lint"]
     },
     "check-types": {
+      "inputs": ["**/*.{ts,tsx}"],
       "dependsOn": ["^check-types"]
     },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "start": {
+      "cache":true,
+      "persistent":true
     }
   }
 }
