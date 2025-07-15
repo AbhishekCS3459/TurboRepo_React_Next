@@ -1,0 +1,72 @@
+name: Deploy Apps
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-react-app:
+    name: Deploy React App
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/react-app
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for changes in React app
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            react-app:
+              - 'apps/react-app/**'
+      - name: Setup Node.js
+        if: steps.changes.outputs.react-app == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        if: steps.changes.outputs.react-app == 'true'
+        run: pnpm install
+      - name: Build React app
+        if: steps.changes.outputs.react-app == 'true'
+        run: pnpm build
+      - name: Deploy React app
+        if: steps.changes.outputs.react-app == 'true'
+        run: |
+          echo "Deploy your React app here (e.g., upload to S3, Vercel CLI, etc.)"
+          # Example: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+
+  deploy-next-app:
+    name: Deploy Next App
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/next-app
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for changes in Next app
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            next-app:
+              - 'apps/next-app/**'
+      - name: Setup Node.js
+        if: steps.changes.outputs.next-app == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        if: steps.changes.outputs.next-app == 'true'
+        run: pnpm install
+      - name: Build Next app
+        if: steps.changes.outputs.next-app == 'true'
+        run: pnpm build
+      - name: Deploy Next app
+        if: steps.changes.outputs.next-app == 'true'
+        run: |
+          echo "Deploy your Next app here (e.g., upload to Vercel, S3, etc.)"
+          # Example: vercel --prod --token ${{ secrets.VERCEL_TOKEN }} 
