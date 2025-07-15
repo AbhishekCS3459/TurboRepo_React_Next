@@ -26,7 +26,7 @@ function App() {
           appName='react_app'
           className='bg-green-400'
         >
-          React app button
+          Shared UI btn inside React
         </Button>
       </div>
       <p className="read-the-docs">

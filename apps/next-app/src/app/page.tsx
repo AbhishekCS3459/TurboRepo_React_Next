@@ -26,7 +26,7 @@ export default function Home() {
               appName="next-app"
               className="bg-red-500"
             >
-              next app button
+              Shared UI button inside next
             </Button>
 
         </div>
